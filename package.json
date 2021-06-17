@@ -2,7 +2,7 @@
   "name": "cs3200-final-backend",
   "version": "1.0.0",
   "description": "CS3200 Final Project API",
-  "main": "script.js",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
     "mysql": "^2.18.1"
