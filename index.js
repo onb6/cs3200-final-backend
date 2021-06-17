@@ -20,8 +20,6 @@ mysqlConnection.connect((err)=> {
         console.log('Connection Failed!'+ JSON.stringify(err,undefined,2));
         });
 
-//Establish the server connection
-//PORT ENVIRONMENT VARIABLE
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
 
