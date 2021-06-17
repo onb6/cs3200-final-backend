@@ -1,7 +1,7 @@
 {
-  "name": "final",
+  "name": "cs3200-final-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "CS3200 Final Project API",
   "main": "script.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
