@@ -42,16 +42,17 @@ app.get('/by-season', function (req, res) {
 
     mysqlConnection.query(
         `select 
-        o.rank, 
-        s.title song_name, 
-        c.name country, 
-        o.year year, 
-        o.season season
+        s.song_id "key",
+        s.title "song_name", 
+        s.url,
+        a.name "artist"
         from on_chart_on o
         join song s using (song_id)
         join country c using (country_id)
+        join artist a using (artist_id)
         where c.name = "${country}" and o.year = ${year} and o.season = "${season}"
-        order by o.rank;`, (err, rows, fields) => {
+        order by o.rank
+        limit 10;`, (err, rows, fields) => {
             if (!err)
             res.json(rows);
             else
@@ -63,17 +64,18 @@ app.get('/all-time', function (req, res) {
     var country = req.query.country;
 
     mysqlConnection.query(
-        `select 
-        o.rank, 
-        s.title song_name, 
-        c.name country, 
-        o.year year, 
-        o.season season
+        `select  
+        s.song_id "key",
+        s.title "song_name", 
+        s.url, 
+        a.name "artist"
         from on_chart_on o
         join song s using (song_id)
         join country c using (country_id)
+        join artist a using (artist_id)
         where c.name = "${country}"
-        order by o.streams desc;`, (err, rows, fields) => {
+        order by o.streams desc
+        limit 10;`, (err, rows, fields) => {
             if (!err)
             return res.json(rows);
             else
@@ -216,15 +218,15 @@ app.get('/compare-genre-by-season' , (req, res) => {
         join artist a on (a.artist_id = s.artist_id)
         join genre g on (g.genre_id = a.artist_id)
         where c.name = "${country1}" and o.year = ${year} and o.season = "${season}" and g.genre_id in (
-        select g.genre_id
-        from on_chart_on o
-        join song s on (o.song_id = s.song_id)
-        join country c on (o.country_id = c.country_id)
-        join artist a on (a.artist_id = s.artist_id)
-        join genre g on (g.genre_id = a.artist_id)
-        where c.name = "${country2}" and o.year = ${year} and o.season = "${season}"
-        group by genre_id
-        order by sum(o.streams) desc)
+            select g.genre_id
+            from on_chart_on o
+            join song s on (o.song_id = s.song_id)
+            join country c on (o.country_id = c.country_id)
+            join artist a on (a.artist_id = s.artist_id)
+            join genre g on (g.genre_id = a.artist_id)
+            where c.name = "${country2}" and o.year = ${year} and o.season = "${season}"
+            group by genre_id
+            order by sum(o.streams) desc)
         group by genre
         order by sum(o.streams) desc
         limit 3;`, (err, rows, fields) => {
