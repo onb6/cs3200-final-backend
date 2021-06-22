@@ -1,19 +1,16 @@
 const mysql = require('mysql');
 const express = require('express');
 const bodyparser = require('body-parser');
+const { portNum, devHost, devDB, devPassword, devUser } = require('./config');
 
 var app = express();
 app.use(bodyparser.json());
 
 var mysqlConnection = mysql.createConnection({
-    // host: "us-cdbr-iron-east-02.cleardb.net",
-    // user: "b7e2437887xxxa",
-    // password: "0200xxx6",
-    // database: "heroku_7643ec736354xxx",
-    host: "localhost",
-    user: "liv",
-    password: "Remydog18!",
-    database: "project",
+    host: devHost,
+    user: devUser,
+    password: devPassword,
+    database: devDB,
     multipleStatements: true
     });
 
@@ -24,7 +21,7 @@ mysqlConnection.connect((err)=> {
         console.log('Connection Failed!'+ JSON.stringify(err,undefined,2));
         });
 
-const port = process.env.PORT || 8080;
+const port = portNum || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
 
 app.use(function(req, res, next) {

@@ -4,6 +4,7 @@
   "description": "CS3200 Final Project API",
   "main": "server.js",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1"
   },
